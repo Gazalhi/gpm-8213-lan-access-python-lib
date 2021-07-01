@@ -27,7 +27,8 @@ class Instrument():
         "HOST :str, adresse ip local de l'appareil (voir System > Congig > LAN) \n PORT : int,23 pour les GPM \n timeout :float, temps en secondes pour lever une erreur en cas de non-réponse, \n variables = list of variable, que vous souhaiterez mesurer sur cette appareil (max 34) \n pattern :int de 1 à 4 ,ensemble de variable à mesurer prédéfinit voir page 94 et 95 du user manual"
         self.location = HOST
         self.port = PORT
-        self.timeout = timeout       
+        self.timeout = timeout 
+        self.connect_to_instrument()
         self.identification()
         self.variables = []
         if len(variables)>0 : 
@@ -42,6 +43,13 @@ class Instrument():
         return f"{self.name}"
     def __repr__(self):
         return f"{self.name},{self.location},{self.port}"
+    def __del__(self):
+        try :
+            self.socket.getpeername()
+            self.close_connection()
+        except OSError :
+            self.socket.close()
+            pass
     def add_variable(self,variable):
         self.pattern = 0
         if len(self.variables)>= 34 : 
@@ -83,12 +91,10 @@ class Instrument():
         self.socket.close()
         return
     def identification(self):
-        self.connect_to_instrument()
         data = self.send_query('*IDN?\r\n')
         self.name = data[0:-2].decode("utf-8")
-        self.close_connection()
     def send_query(self,message):
-        self.socket.sendall(message.encode())
+        self.socket.send(message.encode('ASCII'))
         try :     
             data = self.socket.recv(300)
         except :
@@ -97,20 +103,16 @@ class Instrument():
             raise
         return data
     def send_set(self,message): 
-        self.socket.sendall(message.encode())
+        self.socket.send(message.encode('ASCII'))
     def set_a_variable(self,variable,number):
-        self.connect_to_instrument()
         self.send_set(f':NUM:NORM:ITEM{number} {variable.function}\r\n')
         self.send_set(f':NUM:NORM:NUMB {len(self.variables)}\r\n')
-        self.close_connection()
         return
     def set_variable(self):
-        self.connect_to_instrument()
         size = len(self.variables)
         self.send_set(f':NUM:NORM:NUMB {size}\r\n')
         for number in range(1,size+1) :
              self.send_set(f':NUM:NORM:ITEM{number} {self.variables[number-1].function}\r\n')
-        self.close_connection()
         return
     def variables_pattern(self):
         self.variables = [Variable('U'),Variable('I'),Variable('P')]
@@ -126,16 +128,12 @@ class Instrument():
         if (new_patt>=1) and (new_patt<=4) :
             self.pattern = new_patt
             self.variables_pattern()
-            self.connect_to_instrument()
             self.send_set(f':NUM:NORM:PRES {new_patt}')
-            self.close_connection()
         else :
             raise TypeError('pattern doit être entre 1 et 4')
         return
     def ask_variable(self):
-        self.connect_to_instrument()
         data  = self.send_query(':NUM:NORM:VALUE?\r\n')
-        self.close_connection()
         return data
     def mesure_variable(self):
         data_pars = self.parser_variables(self.ask_variable())
