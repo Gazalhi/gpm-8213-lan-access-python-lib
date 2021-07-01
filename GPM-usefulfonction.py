@@ -87,23 +87,29 @@ class Instrument():
         return
     def close_connection(self): 
         message = ':COMM:REM 0\r\n'
-        self.send_set(message)
+        self.socket.send(message.encode('ASCII'))
         self.socket.close()
         return
     def identification(self):
         data = self.send_query('*IDN?\r\n')
         self.name = data[0:-2].decode("utf-8")
     def send_query(self,message):
+        print('query  '+message)
+        # self.connect_to_instrument()
         self.socket.send(message.encode('ASCII'))
         try :     
-            data = self.socket.recv(300)
+            data = self.socket.recv(200)
         except :
             print(f'{self.location}::{self.port} doesn\'t answer')
             self.close_connection()
             raise
+        # self.close_connection()
         return data
-    def send_set(self,message): 
+    def send_set(self,message):
+        # self.connect_to_instrument()
+        print('set  '+message)
         self.socket.send(message.encode('ASCII'))
+        # self.close_connection()
     def set_a_variable(self,variable,number):
         self.send_set(f':NUM:NORM:ITEM{number} {variable.function}\r\n')
         self.send_set(f':NUM:NORM:NUMB {len(self.variables)}\r\n')
@@ -128,7 +134,7 @@ class Instrument():
         if (new_patt>=1) and (new_patt<=4) :
             self.pattern = new_patt
             self.variables_pattern()
-            self.send_set(f':NUM:NORM:PRES {new_patt}')
+            self.send_set(f':NUM:NORM:PRES {new_patt}\r\n')
         else :
             raise TypeError('pattern doit être entre 1 et 4')
         return
@@ -156,18 +162,21 @@ class Measurement():
             self.mode = mode
         self.instruments = instruments
     def __str__(self):
-        return f"{self.instruments}\n{self.functions}"
+        return f"{self.mode}{self.instruments}"
     def __repr__(self):
-        return self.instruments,self.functions
+        return f"{self.mode}{self.instruments}"
     def __sizeof__(self):
-        "(instruments,functions)"
-        return (len(self.instruments),len(self.functions))
+        "instruments"
+        return len(self.instruments)
     def __call__(self):
+        results = []
         if self.mode.name=='single' :
-            results = []
+            
             for instrument in self.instruments : 
                 results.append(instrument.mesure_variable())
                 results[-1]['Instrument']=instrument.__repr__()
+        elif self.mode.name=='continuous':
+            print()
         return results
     def add_intruments(self,instrument):
         if type(instrument)!=Instrument : 
@@ -217,10 +226,12 @@ class Measurement_mode():
 # %% test 
 variable_available =['U', 'I', 'P', 'S', 'Q', 'LAMB', 'PHI', 'FU', 'FI', 'UPPeak', 'UMPeak', 'IPPeak', 'IMPeak', 'TIME', 'WH', 'WHP', 'WHM', 'AH', 'AHP', 'AHM', 'PPPeak', 'PMPeak', 'CFU', 'CFI', 'UTHD', 'ITHD', 'URANge', 'IRANge']
 GPM_1 = Instrument("138.231.71.232",pattern=4)
-# GPM_2 = Instrument("138.231.71.233",pattern=4)
-# inst = Measurement(instruments=[GPM_1,GPM_2])
-# data =inst()
-# print(data)
+GPM_2 = Instrument("138.231.71.233",pattern=4)
+inst = Measurement(instruments=[GPM_1,GPM_2])
+data =inst()
+print(data)
+GPM_1.__del__()
+GPM_2.__del__()
 # GPM_1 = Instrument("138.231.71.232",variables=variable_available)
 # print(GPM_1.mesure_variable())
 
