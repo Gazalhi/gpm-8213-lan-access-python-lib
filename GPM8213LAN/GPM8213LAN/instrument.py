@@ -1,24 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Class de comm et de parsage  pour GPM-8213
+`GPM8213LAN.instrument` implements the following classes:
+    
+`Instrument` High-level of GPM representation
 
 @author: Hugo_MILAN
 """
-__author__ = "Hugo MILAN"
-__license__ = "GPL"
-__version__ = "1.0.0"
-__maintainer__ = "Hugo MILAN"
-__email__ = "hugo.milan@ens-paris-saclay.fr"
-__status__ = "Education"
-
+from GPM8213LAN.variable import Variable
 import socket as sk
-import numpy as np
-import time as tm
-
-
-
-
-
 
 
 class Instrument():
@@ -150,89 +139,3 @@ class Instrument():
         for number in range(0,len(values)) :
             dict_values[self.variables[number]]=float(values[number])
         return dict_values
-       
-    
-    
-class Measurement():
-    "Crée un Insantance de mesure pour spécifier le mode, les appareils et les grandeurs à mesurer \n Attention : ces appreils sont très peu réactifs et des mesures précises et synchronisées sont impossibles, nous vous conseillons de les utiliser pour des régimes permanants"
-    def __init__(self,mode ='single',instruments = []):
-        if type(mode)!=Measurement_mode :
-            self.mode = Measurement_mode(mode)
-        else :
-            self.mode = mode
-        self.instruments = instruments
-    def __str__(self):
-        return f"{self.mode}{self.instruments}"
-    def __repr__(self):
-        return f"{self.mode}{self.instruments}"
-    def __sizeof__(self):
-        "instruments"
-        return len(self.instruments)
-    def __call__(self):
-        results = []
-        if self.mode.name=='single' :
-            
-            for instrument in self.instruments : 
-                results.append(instrument.mesure_variable())
-                results[-1]['Instrument']=instrument.__repr__()
-        elif self.mode.name=='continuous':
-            print()
-        return results
-    def add_intruments(self,instrument):
-        if type(instrument)!=Instrument : 
-            self.instruments.append(Instrument(instrument)) 
-        else : 
-            self.instruments.append(instrument) 
-        return
-
-        
-class Variable():
-    "Function to display, to find the list go to page 76 and 77 in user manual"
-    def __init__(self,function):
-        self.variable_available =['U', 'I', 'P', 'S', 'Q', 'LAMB', 'PHI', 'FU', 'FI', 'UPPeak', 'UMPeak', 'IPPeak', 'IMPeak', 'TIME', 'WH', 'WHP', 'WHM', 'AH', 'AHP', 'AHM', 'PPPeak', 'PMPeak', 'CFU', 'CFI', 'UTHD', 'ITHD', 'URANge', 'IRANge']
-        if type(function)!=str:
-            raise TypeError('must be a string (str)')
-        if not(function in self.variable_available):
-            raise TypeError('{function} not available')
-        self.function = function
-    def __str__(self):
-        return f'{self.function}'
-    def __repr__(self):
-        return self.function
-    
-    
-class Measurement_mode():
-    "defines type of measurment and its parameters \n single : one measure on  call \n continuous : multiple single measure \n integrator : interger power during time (see urser manual p53)"
-    def __init__(self,mode):
-        if ((mode!='single') and (mode!='continuous') and (mode!='integrator')):
-            raise TypeError('must be a string (str) in single, continuous and integrator')
-        self.name = mode
-        self.specification()
-    def specification(self,sample_time= 1,time = 10):
-        "defines time and sample time which will be use if necessary"
-        self.sample_time = sample_time
-        self.time = time
-        return 
-    def __str__(self):
-        return f"<{self.name}>"
-    def __repr__(self):
-        return self.name
-    
-            
-        
-    
-
-
-# %% test 
-variable_available =['U', 'I', 'P', 'S', 'Q', 'LAMB', 'PHI', 'FU', 'FI', 'UPPeak', 'UMPeak', 'IPPeak', 'IMPeak', 'TIME', 'WH', 'WHP', 'WHM', 'AH', 'AHP', 'AHM', 'PPPeak', 'PMPeak', 'CFU', 'CFI', 'UTHD', 'ITHD', 'URANge', 'IRANge']
-GPM_1 = Instrument("138.231.71.232",pattern=4)
-GPM_2 = Instrument("138.231.71.233",pattern=4)
-inst = Measurement(instruments=[GPM_1,GPM_2])
-data =inst()
-print(data)
-GPM_1.__del__()
-GPM_2.__del__()
-# GPM_1 = Instrument("138.231.71.232",variables=variable_available)
-# print(GPM_1.mesure_variable())
-
-
