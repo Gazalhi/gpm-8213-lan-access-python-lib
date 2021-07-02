@@ -5,4 +5,4 @@ GPM8213LAN
 
 * GPM8213LAN folder : package
 * docs : documentation to change it 
-    * .\\bluid\\index.html : user documentation 
+    * .\\bluid\\: user documentation, download it and open .\\html\\index.html
