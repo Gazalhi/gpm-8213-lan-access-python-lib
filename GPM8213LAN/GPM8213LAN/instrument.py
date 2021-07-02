@@ -6,9 +6,16 @@
 
 """
 from GPM8213LAN.variable import Variable
+import time as tm
 import socket as sk
 
-
+# =============================================================================
+# in next realese : 
+#         methode to change the parameters and screens 
+#         continous mode
+#         integrator mode
+#         link to user manual in documentation
+# =============================================================================
 class Instrument():
     """:HOST: *str* , local ip address of the GPM (voir System > Congig > LAN on the GPM). \n
 :PORT: *int* ,23 for the GPM ,Telnet protocol. \n
@@ -113,7 +120,7 @@ class Instrument():
         # self.connect_to_instrument()
         self.socket.send(message.encode('ASCII'))
         try :     
-            data = self.socket.recv(200)
+            data = self.socket.recv(512)
         except :
             print(f'{self.location}::{self.port} doesn\'t answer')
             self.close_connection()
@@ -189,3 +196,13 @@ class Instrument():
         for number in range(0,len(values)) :
             dict_values[self.variables[number]]=float(values[number])
         return dict_values
+    def continous_measure(self,sample_time = 1,time=10):
+        start=tm.time()
+        while((tm.time()-start)<self.mode.time):
+            start_sample =tm.time()
+            for instrument in self.instruments : 
+                results.append(instrument.mesure_variable())
+                results[-1]['Instrument']=instrument.__repr__()
+        #tout envoyer puis récupérer essayer avec deux sockets différentes
+        
+        return

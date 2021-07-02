@@ -8,7 +8,8 @@
 
 """
 from GPM8213LAN.instrument import Instrument
-
+from GPM8213LAN.variable import variable_available
+import time as tm
 
 class Measurement():
     """:mode: *str* or *Measurement_mode*, 'single' or 'continuous' or 'integrator' \n
@@ -38,7 +39,12 @@ Warning: these devices are very little reactive and precise and synchronized mea
                 results.append(instrument.mesure_variable())
                 results[-1]['Instrument']=instrument.__repr__()
         elif self.mode.name=='continuous':
-            print()
+            start=tm.time()
+            while((tm.time()-start)<self.mode.time):
+                start_sample =tm.time()
+                for instrument in self.instruments : 
+                    results.append(instrument.mesure_variable())
+                    results[-1]['Instrument']=instrument.__repr__()
         return results
     def add_intruments(self,instrument):
         """:instrument: *Instrument* \n 
