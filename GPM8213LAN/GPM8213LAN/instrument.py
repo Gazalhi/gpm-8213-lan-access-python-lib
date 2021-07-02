@@ -4,16 +4,14 @@
     
 `Instrument` High-level of GPM representation
 
-@author: Hugo_MILAN
 """
 from GPM8213LAN.variable import Variable
 import socket as sk
 
 
 class Instrument():
-    "Correspond à un appareil"
+    "HOST :str,  local ip address of the GPM (voir System > Congig > LAN on the GPM) \n PORT : int,23 for the GPM ,Telnet protocol \n timeout :float, time seconds to raise an error, \n variables = list of Variable, variable to measure \n pattern :int de 1 à 4 ,preset varaibles see page 94 and 95 of user manual"
     def __init__(self,HOST,PORT = 23,timeout = 2,variables = [], pattern = 4):
-        "HOST :str, adresse ip local de l'appareil (voir System > Congig > LAN) \n PORT : int,23 pour les GPM \n timeout :float, temps en secondes pour lever une erreur en cas de non-réponse, \n variables = list of variable, que vous souhaiterez mesurer sur cette appareil (max 34) \n pattern :int de 1 à 4 ,ensemble de variable à mesurer prédéfinit voir page 94 et 95 du user manual"
         self.location = HOST
         self.port = PORT
         self.timeout = timeout 
@@ -40,6 +38,7 @@ class Instrument():
             self.socket.close()
             pass
     def add_variable(self,variable):
+        "add a Variable to the list of varaible (max : 34), don't use self.variables.append(variable)"
         self.pattern = 0
         if len(self.variables)>= 34 : 
             raise OverflowError('Pas plus de 34 variables')
@@ -64,7 +63,7 @@ class Instrument():
             self.set_a_variable(self.variables[-1], len(self.variables))
         return
     def connect_to_instrument(self):
-        "Établis la connexion avec un GPM (par le biliothèque socket) et vérifie qu'il est accessible"
+        "Establishes the connection with a GPM (via the socket library) and verifies that it is accessible"
         self.socket = sk.socket(sk.AF_INET, sk.SOCK_STREAM)
         self.socket.settimeout(self.timeout)
         try :
@@ -74,15 +73,18 @@ class Instrument():
             self.socket.close()
             raise
         return
-    def close_connection(self): 
+    def close_connection(self):
+        "close the connection and remove the remote control on the GPM"
         message = ':COMM:REM 0\r\n'
         self.socket.send(message.encode('ASCII'))
         self.socket.close()
         return
     def identification(self):
+        "fetch the basics data about the GPM used"
         data = self.send_query('*IDN?\r\n')
         self.name = data[0:-2].decode("utf-8")
     def send_query(self,message):
+        "Send a query, see user manual to know which command are query or set"
         print('query  '+message)
         # self.connect_to_instrument()
         self.socket.send(message.encode('ASCII'))
@@ -95,21 +97,25 @@ class Instrument():
         # self.close_connection()
         return data
     def send_set(self,message):
+        "Send a set, see user manual to know which command are query or set"
         # self.connect_to_instrument()
         print('set  '+message)
         self.socket.send(message.encode('ASCII'))
         # self.close_connection()
     def set_a_variable(self,variable,number):
+        "DO NOT USE, send set to change 1 Variable of VALUE? command"
         self.send_set(f':NUM:NORM:ITEM{number} {variable.function}\r\n')
         self.send_set(f':NUM:NORM:NUMB {len(self.variables)}\r\n')
         return
     def set_variable(self):
+        "DO NOT USE, send set to change VariableS of VALUE? command"
         size = len(self.variables)
         self.send_set(f':NUM:NORM:NUMB {size}\r\n')
         for number in range(1,size+1) :
              self.send_set(f':NUM:NORM:ITEM{number} {self.variables[number-1].function}\r\n')
         return
     def variables_pattern(self):
+        "DO NOT USE, associate variables with the current PRESET"
         self.variables = [Variable('U'),Variable('I'),Variable('P')]
         if self.pattern>=2 :
             self.variables += [Variable('S'),Variable('Q'),Variable('LAMB'),Variable('PHI'),Variable('FU'),Variable('FI')]
@@ -120,6 +126,7 @@ class Instrument():
             self.variables[14] = Variable('WH')
             self.variables += [Variable('WHP'),Variable('WHM'),Variable('AH'),Variable('AHP'),Variable('AHM'),Variable('PPPeak'),Variable('PMPeak'),Variable('CFU'),Variable('CFI'),Variable('UTHD'),Variable('ITHD'),Variable('URANge'),Variable('IRANge')]
     def change_pattern(self,new_patt):
+        "Change the Preset (pattern) with the new one (new_patt)"
         if (new_patt>=1) and (new_patt<=4) :
             self.pattern = new_patt
             self.variables_pattern()
@@ -128,12 +135,15 @@ class Instrument():
             raise TypeError('pattern doit être entre 1 et 4')
         return
     def ask_variable(self):
+        "Retrun variables in string format"
         data  = self.send_query(':NUM:NORM:VALUE?\r\n')
         return data
     def mesure_variable(self):
+        "Retrun variables in dico of float format"
         data_pars = self.parser_variables(self.ask_variable())
         return data_pars
     def parser_variables(self,data):
+        "Convert string format to  dico of float format"
         values = data.decode("utf-8").split(',')
         dict_values = {}
         for number in range(0,len(values)) :

@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPM8213LAN package &#8212; GPM8213LAN 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Project Example" href="project%20example.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="gpm8213lan-package">
+<h1>GPM8213LAN package<a class="headerlink" href="#gpm8213lan-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-GPM8213LAN.instrument">
+<span id="gpm8213lan-instrument-module"></span><h2>GPM8213LAN.instrument module<a class="headerlink" href="#module-GPM8213LAN.instrument" title="Permalink to this headline">¶</a></h2>
+<p><cite>GPM8213LAN.instrument</cite> implements the following classes:</p>
+<p><cite>Instrument</cite> High-level of GPM representation</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GPM8213LAN.instrument.</span></span><span class="sig-name descname"><span class="pre">Instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">HOST</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PORT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>HOST :str,  local ip address of the GPM (voir System &gt; Congig &gt; LAN on the GPM) 
+PORT : int,23 for the GPM ,Telnet protocol 
+timeout :float, time seconds to raise an error, 
+variables = list of Variable, variable to measure 
+pattern :int de 1 à 4 ,preset varaibles see page 94 and 95 of user manual</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.add_variable">
+<span class="sig-name descname"><span class="pre">add_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.add_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>add a Variable to the list of varaible (max : 34), don’t use self.variables.append(variable)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.ask_variable">
+<span class="sig-name descname"><span class="pre">ask_variable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.ask_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrun variables in string format</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.change_pattern">
+<span class="sig-name descname"><span class="pre">change_pattern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_patt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.change_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the Preset (pattern) with the new one (new_patt)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.close_connection">
+<span class="sig-name descname"><span class="pre">close_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.close_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>close the connection and remove the remote control on the GPM</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.connect_to_instrument">
+<span class="sig-name descname"><span class="pre">connect_to_instrument</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.connect_to_instrument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Establishes the connection with a GPM (via the socket library) and verifies that it is accessible</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.identification">
+<span class="sig-name descname"><span class="pre">identification</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.identification" title="Permalink to this definition">¶</a></dt>
+<dd><p>fetch the basics data about the GPM used</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.mesure_variable">
+<span class="sig-name descname"><span class="pre">mesure_variable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.mesure_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrun variables in dico of float format</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.parser_variables">
+<span class="sig-name descname"><span class="pre">parser_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.parser_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert string format to  dico of float format</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.send_query">
+<span class="sig-name descname"><span class="pre">send_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.send_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a query, see user manual to know which command are query or set</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.send_set">
+<span class="sig-name descname"><span class="pre">send_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.send_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a set, see user manual to know which command are query or set</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.set_a_variable">
+<span class="sig-name descname"><span class="pre">set_a_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.set_a_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>DO NOT USE, send set to change 1 Variable of VALUE? command</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.set_variable">
+<span class="sig-name descname"><span class="pre">set_variable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.set_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>DO NOT USE, send set to change VariableS of VALUE? command</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.variables_pattern">
+<span class="sig-name descname"><span class="pre">variables_pattern</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.variables_pattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>DO NOT USE, associate variables with the current PRESET</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-GPM8213LAN.measurement">
+<span id="gpm8213lan-measurement-module"></span><h2>GPM8213LAN.measurement module<a class="headerlink" href="#module-GPM8213LAN.measurement" title="Permalink to this headline">¶</a></h2>
+<p><cite>GPM8213LAN.measurement</cite> implements the following classes:</p>
+<p><cite>Measurement</cite> instance of measuring to automate the measure process</p>
+<p><cite>Measurement_mode</cite> type of measurement with specific parameter</p>
+<p>&#64;author: Hugo_MILAN</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="GPM8213LAN.measurement.Measurement">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GPM8213LAN.measurement.</span></span><span class="sig-name descname"><span class="pre">Measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'single'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instruments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.measurement.Measurement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Crée un Insantance de mesure pour spécifier le mode, les appareils et les grandeurs à mesurer 
+Attention : ces appreils sont très peu réactifs et des mesures précises et synchronisées sont impossibles, nous vous conseillons de les utiliser pour des régimes permanants</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.measurement.Measurement.add_intruments">
+<span class="sig-name descname"><span class="pre">add_intruments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instrument</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.measurement.Measurement.add_intruments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="GPM8213LAN.measurement.Measurement_mode">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GPM8213LAN.measurement.</span></span><span class="sig-name descname"><span class="pre">Measurement_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.measurement.Measurement_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>defines type of measurment and its parameters 
+single : one measure on  call 
+continuous : multiple single measure 
+integrator : interger power during time (see urser manual p53)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.measurement.Measurement_mode.specification">
+<span class="sig-name descname"><span class="pre">specification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.measurement.Measurement_mode.specification" title="Permalink to this definition">¶</a></dt>
+<dd><p>defines time and sample time which will be use if necessary</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-GPM8213LAN.variable">
+<span id="gpm8213lan-variable-module"></span><h2>GPM8213LAN.variable module<a class="headerlink" href="#module-GPM8213LAN.variable" title="Permalink to this headline">¶</a></h2>
+<p><cite>GPM8213LAN.variable</cite> implements the following classes:</p>
+<p><cite>Variable</cite> variable which GPM-8213 can measure</p>
+<p>&#64;author: Hugo_MILAN</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="GPM8213LAN.variable.Variable">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GPM8213LAN.variable.</span></span><span class="sig-name descname"><span class="pre">Variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.variable.Variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Function to display, to find the list go to page 76 and 77 in user manual</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-GPM8213LAN">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-GPM8213LAN" title="Permalink to this headline">¶</a></h2>
+<p>GPM-8213-LAN access and smart measurment</p>
+<p>&#64;author: Hugo_MILAN
+email : <a class="reference external" href="mailto:hugo&#46;milan&#37;&#52;&#48;ens-paris-saclay&#46;fr">hugo<span>&#46;</span>milan<span>&#64;</span>ens-paris-saclay<span>&#46;</span>fr</a></p>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">GPM8213LAN</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="project%20example.html">Project Example</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">GPM8213LAN package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-GPM8213LAN.instrument">GPM8213LAN.instrument module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-GPM8213LAN.measurement">GPM8213LAN.measurement module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-GPM8213LAN.variable">GPM8213LAN.variable module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-GPM8213LAN">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="project%20example.html" title="previous chapter">Project Example</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Hugo Milan.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/GPM8213LAN.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
