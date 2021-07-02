@@ -1,8 +1,16 @@
 GPM8213LAN package
 ==================
 
-Submodules
-----------
+Module contents
+---------------
+
+.. automodule:: GPM8213LAN
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+
 
 GPM8213LAN.instrument module
 ----------------------------
@@ -12,6 +20,9 @@ GPM8213LAN.instrument module
    :undoc-members:
    :show-inheritance:
 
+
+
+
 GPM8213LAN.measurement module
 -----------------------------
 
@@ -19,6 +30,9 @@ GPM8213LAN.measurement module
    :members:
    :undoc-members:
    :show-inheritance:
+
+
+
 
 GPM8213LAN.variable module
 --------------------------
@@ -28,10 +42,4 @@ GPM8213LAN.variable module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
-.. automodule:: GPM8213LAN
-   :members:
-   :undoc-members:
-   :show-inheritance:
