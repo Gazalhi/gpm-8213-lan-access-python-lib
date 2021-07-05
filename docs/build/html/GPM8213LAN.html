@@ -51,45 +51,44 @@
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GPM8213LAN.instrument.</span></span><span class="sig-name descname"><span class="pre">Instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">HOST</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PORT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">HOST</dt>
-<dd class="field-odd"><p><em>str</em> , local ip address of the GPM (voir System &gt; Congig &gt; LAN on the GPM).</p>
+<dl>
+<dt>HOST<span class="classifier"><em>str</em></span></dt><dd><p>local ip address of the GPM (voir System &gt; Congig &gt; LAN on the GPM)..</p>
 </dd>
-<dt class="field-even">PORT</dt>
-<dd class="field-even"><p><em>int</em> ,23 for the GPM ,Telnet protocol.</p>
+<dt>PORT<span class="classifier"><em>int</em>, optional</span></dt><dd><p>23 for the GPM ,Telnet protocol. The default is 23.</p>
 </dd>
-<dt class="field-odd">Timeout</dt>
-<dd class="field-odd"><p><em>float</em> , time seconds to raise an error.</p>
+<dt>timeout<span class="classifier"><em>float</em>, optional</span></dt><dd><p>time seconds to raise an error.</p>
 </dd>
-<dt class="field-even">Variables</dt>
-<dd class="field-even"><p><em>list of Variable</em>, variable to measure.</p>
+<dt>variables<span class="classifier"><em>list of Variable</em>, optional</span></dt><dd><p>variables to measure. The default is [].</p>
 </dd>
-<dt class="field-odd">Pattern</dt>
-<dd class="field-odd"><p><em>int</em> de 1 à 4 ,preset varaibles see page 94 and 95 of user manual.</p>
+<dt>pattern<span class="classifier"><em>int</em> de 1 à 4 , optional</span></dt><dd><p>preset varaibles see page 94 and 95 of user manual. The default is 4.</p>
 </dd>
 </dl>
+<dl class="simple">
+<dt>OverflowError</dt><dd><p>if len(variables)&gt;34.</p>
+</dd>
+</dl>
+<p>None.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.add_variable">
 <span class="sig-name descname"><span class="pre">add_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.add_variable" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Variable</dt>
-<dd class="field-odd"><p><em>Variable</em> or <em>list of Variable</em></p>
-</dd>
-<dt class="field-even">Do</dt>
-<dd class="field-even"><p>add a Variable or list of Variable to the list of varaible (max : 34), don’t use self.variables.append(variable)</p>
-</dd>
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>None</em></p>
+<dd><p>add a Variable or list of Variable to the list of varaible (max : 34), don’t use self.variables.append(variable)</p>
+<dl>
+<dt>variable<span class="classifier"><em>Variable</em> or <em>list of Variable</em></span></dt><dd><p>variables to add.</p>
 </dd>
 </dl>
+<dl class="simple">
+<dt>OverflowError</dt><dd><p>if len(variable)&gt;34.</p>
+</dd>
+</dl>
+<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.ask_variable">
 <span class="sig-name descname"><span class="pre">ask_variable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.ask_variable" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>str</em>,variables values</p>
+<dd><p>Ask the value of the variables to the GPM</p>
+<dl>
+<dt>data<span class="classifier"><em>str</em></span></dt><dd><p>variables values. (unparsed)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -97,62 +96,61 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.change_pattern">
 <span class="sig-name descname"><span class="pre">change_pattern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_patt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.change_pattern" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">New_patt</dt>
-<dd class="field-odd"><p><em>int</em> de 1 à 4 ,preset varaibles see page 94 and 95 of user manual.</p>
+<dd><p>change the preset and make the change in the GPM</p>
+<dl>
+<dt>new_patt<span class="classifier"><em>int</em>  1 to 4</span></dt><dd><p>preset varaibles see page 94 and 95 of user manual.</p>
 </dd>
 </dl>
-<p>Change the Preset (pattern) with the new one (new_patt)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>None</em></p>
+<dl class="simple">
+<dt>TypeError</dt><dd><p>if new_patt is not in [1,4]</p>
 </dd>
 </dl>
+<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.change_variables">
 <span class="sig-name descname"><span class="pre">change_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.change_variables" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Variable</dt>
-<dd class="field-odd"><p><em>Variable</em> or <em>list of Variable</em></p>
+<dd><p>Reset variables then add variables</p>
+<dl>
+<dt>variables<span class="classifier"><em>Variable</em> or <em>list of Variable</em></span></dt><dd><p>new variables.</p>
 </dd>
 </dl>
-<p>Reset variables then add variables</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>None</em></p>
-</dd>
-</dl>
+<p>None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.clear_buffer">
+<span class="sig-name descname"><span class="pre">clear_buffer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.clear_buffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>clear the reception buffer</p>
+<p>data : <em>str</em> or None
+data fetch in the buffer.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.close_connection">
 <span class="sig-name descname"><span class="pre">close_connection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.close_connection" title="Permalink to this definition">¶</a></dt>
 <dd><p>close the connection and remove the remote control on the GPM</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>None</em></p>
-</dd>
-</dl>
+<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.connect_to_instrument">
 <span class="sig-name descname"><span class="pre">connect_to_instrument</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.connect_to_instrument" title="Permalink to this definition">¶</a></dt>
 <dd><p>Establishes the connection with a GPM (via the socket library) and verifies that it is accessible</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>None</em></p>
-</dd>
-</dl>
+<p>None.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.continous_measure">
+<span class="sig-name descname"><span class="pre">continous_measure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.continous_measure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.identification">
 <span class="sig-name descname"><span class="pre">identification</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.identification" title="Permalink to this definition">¶</a></dt>
-<dd><p>fetch the basics data about the GPM used
-:return: <em>None</em></p>
+<dd><p>fetch the basics data about the GPM used</p>
+<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -168,26 +166,29 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.parser_variables">
 <span class="sig-name descname"><span class="pre">parser_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.parser_variables" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Data</dt>
-<dd class="field-odd"><p><em>str</em>,variables values</p>
+<dd><p>Convert string format to  dico of float format.</p>
+<dl>
+<dt>data<span class="classifier"><em>str</em> ,variables values</span></dt><dd><p>values in string format</p>
 </dd>
 </dl>
-<p>Convert string format to  dico of float format</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>dict of float</em>,variables values</p>
+<dl>
+<dt>dict_values<span class="classifier"><em>dict of float</em></span></dt><dd><p>variables values</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.send_query">
-<span class="sig-name descname"><span class="pre">send_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.send_query" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">send_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.send_query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a query, see user manual to know which command are query or set</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>str</em>, GPM’s answer</p>
+<dl>
+<dt>message :<em>str</em></dt><dd><p>message to send to the GPM with the ending rn.</p>
+</dd>
+<dt>buffer_size<span class="classifier"><em>int</em>, optional</span></dt><dd><p>the size of reception buffer is 2**(buffer_size). The default is 9.</p>
+</dd>
+</dl>
+<dl>
+<dt>data<span class="classifier"><em>str</em></span></dt><dd><p>GPM’s answer.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -196,44 +197,38 @@
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.send_set">
 <span class="sig-name descname"><span class="pre">send_set</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.send_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send a set, see user manual to know which command are query or set</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>None</em></p>
+<dl class="simple">
+<dt>message :<em>str</em></dt><dd><p>message to send to the GPM with the ending rn.</p>
 </dd>
 </dl>
+<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.set_a_variable">
 <span class="sig-name descname"><span class="pre">set_a_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.set_a_variable" title="Permalink to this definition">¶</a></dt>
-<dd><p>DO NOT USE, send set to change 1 Variable of VALUE? command</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>None</em></p>
+<dd><p>send set to change 1 Variable of VALUE? command.</p>
+<dl>
+<dt>variable<span class="classifier"><em>Variable</em></span></dt><dd><p>New variable type.</p>
+</dd>
+<dt>number<span class="classifier"><em>int</em></span></dt><dd><p>the position of the item in VALUE? command.</p>
 </dd>
 </dl>
+<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.set_variable">
 <span class="sig-name descname"><span class="pre">set_variable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.set_variable" title="Permalink to this definition">¶</a></dt>
-<dd><p>DO NOT USE, send set to change VariableS of VALUE? command</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>None</em></p>
-</dd>
-</dl>
+<dd><p>DO NOT USE, send set to change VariableS of VALUE? command.</p>
+<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.variables_pattern">
 <span class="sig-name descname"><span class="pre">variables_pattern</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.variables_pattern" title="Permalink to this definition">¶</a></dt>
-<dd><p>DO NOT USE, associate variables with the current PRESET</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>None</em></p>
-</dd>
-</dl>
+<dd><p>DO NOT USE, associate variables with the current PRESET.</p>
+<p>None.</p>
 </dd></dl>
 
 </dd></dl>
@@ -254,44 +249,36 @@
 <dt class="sig sig-object py" id="GPM8213LAN.measurement.Measurement">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GPM8213LAN.measurement.</span></span><span class="sig-name descname"><span class="pre">Measurement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'single'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instruments</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.measurement.Measurement" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="field-list">
-<dt class="field-odd">Mode</dt>
-<dd class="field-odd"><p><em>str</em> or <em>Measurement_mode</em>, ‘single’ or ‘continuous’ or ‘integrator’</p>
-<dl class="field-list simple">
-<dt class="field-odd">instruments</dt>
-<dd class="field-odd"><p><em>list of Instrument</em></p>
+<p>Creates a measurement Insantance to specify the <strong>mode</strong>, <strong>devices</strong> and <cite>variables</cite> to be measured. You have to specifies variables of each Instrument or use homogenize_variables(). Call the class to begin the measure.</p>
+<dl>
+<dt>mode<span class="classifier"><em>str</em> or <em>Measurement_mode</em>, optional</span></dt><dd><p>‘single’ or ‘continuous’ or ‘integrator’. The default is ‘single’.</p>
+</dd>
+<dt>instruments<span class="classifier"><em>list of Instrument</em> , optional</span></dt><dd><p>GPMs, you are using. The default is [].</p>
 </dd>
 </dl>
-<p>Creates a measurement Insantance to specify the <strong>mode</strong>, <strong>devices</strong> and <cite>variables</cite> to be measured.</p>
-</dd>
-</dl>
-<p>You have to specifies variables of each Instrument or use homogenize_variables()</p>
-<p>Warning: these devices are very little reactive and precise and synchronized measurements are impossible, we advise you to use them during steady-state</p>
+<p>None.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.measurement.Measurement.add_intruments">
 <span class="sig-name descname"><span class="pre">add_intruments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instrument</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.measurement.Measurement.add_intruments" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Instrument</dt>
-<dd class="field-odd"><p><em>Instrument</em></p>
+<dd><p>add an Instrument</p>
+<dl>
+<dt>instrument<span class="classifier"><em>Instrument</em></span></dt><dd><p>instrument to add.</p>
 </dd>
 </dl>
-<p>add an Instrument</p>
-<p>:return <em>None</em></p>
+<p>None.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.measurement.Measurement.homogenize_variables">
 <span class="sig-name descname"><span class="pre">homogenize_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.measurement.Measurement.homogenize_variables" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><em>list of Variable</em>, variable to measure.</p>
+<dd><p>change variables/Preset of each instrument</p>
+<dl>
+<dt>variables<span class="classifier"><em>list of Variable</em>, optional</span></dt><dd><p>variable to measure. The default is [].</p>
 </dd>
-<dt class="field-even">Pattern</dt>
-<dd class="field-even"><p><em>int</em> de 1 à 4 ,preset varaibles see page 94 and 95 of user manual</p>
+<dt>pattern<span class="classifier"><em>int</em> de 1 à 4, optional</span></dt><dd><p>preset varaibles see page 94 and 95 of user manual. The default is 4.</p>
 </dd>
 </dl>
-<p>change variables/Preset of each instrument
-:return: <em>None</em></p>
+<p>None.</p>
 </dd></dl>
 
 </dd></dl>
@@ -301,32 +288,28 @@
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GPM8213LAN.measurement.</span></span><span class="sig-name descname"><span class="pre">Measurement_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.measurement.Measurement_mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>defines type of measurment and its parameters</p>
-<dl class="field-list simple">
-<dt class="field-odd">Mode</dt>
-<dd class="field-odd"><p><em>str</em> in : 
-single : one measure on  call
-continuous : multiple single measure
-integrator : interger power during time (see urser manual p53)</p>
+<dl class="simple">
+<dt>mode :<em>str</em> in<span class="classifier"></span></dt><dd><p>single : one measure on  call.
+continuous : multiple single measure.
+integrator : interger power during time (see user manual p53).</p>
 </dd>
 </dl>
+<dl class="simple">
+<dt>TypeError</dt><dd><p>if mode is not in ‘single’, ‘continuous’ and ‘integrator’.</p>
+</dd>
+</dl>
+<p>None.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="GPM8213LAN.measurement.Measurement_mode.specification">
 <span class="sig-name descname"><span class="pre">specification</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.measurement.Measurement_mode.specification" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list">
-<dt class="field-odd">Sample_time</dt>
-<dd class="field-odd"><p><em>int</em>, sample time in secondes (continuous mode)</p>
-<dl class="field-list simple">
-<dt class="field-odd">time</dt>
-<dd class="field-odd"><p><em>int</em>, time in secondes (continuous and integrator mode)</p>
+<dd><p>defines time and sample time which will be use if necessary</p>
+<dl>
+<dt>sample_time<span class="classifier"><em>int</em>, optional</span></dt><dd><p>sample time in secondes (continuous mode). The default is 1.</p>
+</dd>
+<dt>time<span class="classifier"><em>int</em>, optional</span></dt><dd><p>time in secondes (continuous and integrator mode). The default is 10.</p>
 </dd>
 </dl>
-<p>defines time and sample time which will be use if necessary 
-:return: <a href="#id1"><span class="problematic" id="id2">*</span></a>None</p>
-</dd>
-</dl>
-<ul class="simple">
-<li></li>
-</ul>
+<p>None.</p>
 </dd></dl>
 
 </dd></dl>
@@ -344,21 +327,24 @@ integrator : interger power during time (see urser manual p53)</p>
 <dt class="sig sig-object py" id="GPM8213LAN.variable.Variable">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GPM8213LAN.variable.</span></span><span class="sig-name descname"><span class="pre">Variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.variable.Variable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Function</dt>
-<dd class="field-odd"><p><em>str</em> in variable_available</p>
+<p>Function to display, to find the list go to page 76 and 77 in user manual
+see <cite>variable_available</cite> to see variable of GPM-821</p>
+<dl>
+<dt>function<span class="classifier"><em>str</em> </span></dt><dd><p>find the list in variable_available().</p>
 </dd>
 </dl>
-<p>Function to display, to find the list go to page 76 and 77 in user manual
-see <cite>variable_available</cite> to see variable of GPM-8213</p>
+<dl class="simple">
+<dt>TypeError</dt><dd><p>if the parameter function is not in variable_available().</p>
+</dd>
+</dl>
+<p>None.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="GPM8213LAN.variable.variable_available">
 <span class="sig-prename descclassname"><span class="pre">GPM8213LAN.variable.</span></span><span class="sig-name descname"><span class="pre">variable_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.variable.variable_available" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><em>list of str</em>, all function of GPM-8213</p>
+<dd><dl class="simple">
+<dt><em>list of str</em></dt><dd><p>all variable of GPM-8213.</p>
 </dd>
 </dl>
 </dd></dl>

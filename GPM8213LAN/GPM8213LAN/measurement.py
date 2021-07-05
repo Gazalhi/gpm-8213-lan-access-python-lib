@@ -12,13 +12,23 @@ from GPM8213LAN.variable import variable_available
 import time as tm
 
 class Measurement():
-    """:mode: *str* or *Measurement_mode*, 'single' or 'continuous' or 'integrator' \n
-    :instruments: *list of Instrument* \n
-    Creates a measurement Insantance to specify the **mode**, **devices** and `variables` to be measured. \n
-You have to specifies variables of each Instrument or use homogenize_variables() \n
-Warning: these devices are very little reactive and precise and synchronized measurements are impossible, we advise you to use them during steady-state
-        \n"""
+    """
+Creates a measurement Insantance to specify the **mode**, **devices** and `variables` to be measured. You have to specifies variables of each Instrument or use homogenize_variables(). Call the class to begin the measure.         
+
+Parameters
+----------
+mode : *str* or *Measurement_mode*, optional
+   'single' or 'continuous' or 'integrator'. The default is 'single'.
+instruments : *list of Instrument* , optional
+    GPMs, you are using. The default is [].
+
+Returns
+-------
+None.
+
+        """
     def __init__(self,mode ='single',instruments = []):
+
         if type(mode)!=Measurement_mode :
             self.mode = Measurement_mode(mode)
         else :
@@ -29,13 +39,24 @@ Warning: these devices are very little reactive and precise and synchronized mea
     def __repr__(self):
         return f"{self.mode}{self.instruments}"
     def __sizeof__(self):
-        "instruments"
+        """
+        
+
+Returns
+-------
+int
+    number of instrument.
+
+        """
         return len(self.instruments)
     def __call__(self):
         results = []
         if self.mode.name=='single' :
             
             for instrument in self.instruments : 
+                instrument.send_set(':NUM:NORM:VALUE?\r\n')
+            
+            for instrument in self.instruments :
                 results.append(instrument.mesure_variable())
                 results[-1]['Instrument']=instrument.__repr__()
         elif self.mode.name=='continuous':
@@ -47,21 +68,40 @@ Warning: these devices are very little reactive and precise and synchronized mea
                     results[-1]['Instrument']=instrument.__repr__()
         return results
     def add_intruments(self,instrument):
-        """:instrument: *Instrument* \n 
-        add an Instrument \n
-        :return *None*
-        \n"""
+        """
+add an Instrument        
+
+Parameters
+----------
+instrument : *Instrument*
+   instrument to add.
+
+Returns
+-------
+None.
+
+        """
         if type(instrument)!=Instrument : 
             self.instruments.append(Instrument(instrument)) 
         else : 
             self.instruments.append(instrument) 
         return
     def homogenize_variables(self,variables=[],pattern=4): 
-        """ :variables: *list of Variable*, variable to measure. \n
-        :pattern: *int* de 1 à 4 ,preset varaibles see page 94 and 95 of user manual \n
-        change variables/Preset of each instrument
-        :return: *None*
-        \n"""
+        """
+change variables/Preset of each instrument
+
+Parameters
+----------
+variables : *list of Variable*, optional
+    variable to measure. The default is [].
+pattern : *int* de 1 à 4, optional
+    preset varaibles see page 94 and 95 of user manual. The default is 4.
+
+Returns
+-------
+None.
+
+        """
         if variables==[]:
             for instrument in self.instruments :
                 instrument.change_pattern(pattern)
@@ -70,23 +110,48 @@ Warning: these devices are very little reactive and precise and synchronized mea
                 instrument.change_variables(variables)
         return
 class Measurement_mode():
-    """defines type of measurment and its parameters \n
-    :mode: *str* in : 
-        single : one measure on  call
-        continuous : multiple single measure
-        integrator : interger power during time (see urser manual p53)
-        \n"""
+    """
+defines type of measurment and its parameters
+
+Parameters
+----------
+mode :*str* in : 
+    single : one measure on  call.
+    continuous : multiple single measure.
+    integrator : interger power during time (see user manual p53).
+
+Raises
+------
+TypeError
+    if mode is not in 'single', 'continuous' and 'integrator'.
+
+Returns
+-------
+None.
+
+        """
     def __init__(self,mode):
+
         if ((mode!='single') and (mode!='continuous') and (mode!='integrator')):
             raise TypeError('must be a string (str) in single, continuous and integrator')
         self.name = mode
         self.specification()
     def specification(self,sample_time= 1,time = 10):
-        """:sample_time: *int*, sample time in secondes (continuous mode) \n 
-        :time: *int*, time in secondes (continuous and integrator mode) \n
-        defines time and sample time which will be use if necessary 
-        :return: *None
-        \n*"""
+        """
+defines time and sample time which will be use if necessary 
+
+Parameters
+----------
+sample_time : *int*, optional
+    sample time in secondes (continuous mode). The default is 1.
+time : *int*, optional
+    time in secondes (continuous and integrator mode). The default is 10.
+
+Returns
+-------
+None.
+
+        """
         self.sample_time = sample_time
         self.time = time
         return 
