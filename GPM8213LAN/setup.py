@@ -9,7 +9,7 @@ from setuptools import find_packages,setup
 
 setup(
       name='GPM8213LAN',
-      version='0.1.0',
+      version='0.1.5',
       author='Milan Hugo',
       author_email='hugo.milan@ens-paris-saclay.fr',
       description='GPM-8213 LAN Access on python',

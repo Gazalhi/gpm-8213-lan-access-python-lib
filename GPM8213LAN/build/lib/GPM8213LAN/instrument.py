@@ -33,6 +33,8 @@ variables : *list of Variable*, optional
     variables to measure. The default is [].
 pattern : *int* de 1 à 4 , optional
     preset varaibles see page 94 and 95 of user manual. The default is 4.
+mode : mode AC ,DC or AC + DC. The default is 'ACDC'.
+
 
 Raises
 ------
@@ -44,7 +46,7 @@ Returns
 None.
 
     """
-    def __init__(self,HOST,PORT = 23,timeout = 2,variables = [], pattern = 4):
+    def __init__(self,HOST,PORT = 23,timeout = 2,variables = [], pattern = 4,mode='ACDC',I_range=10,V_range=600,CF=3):
 
         self.location = HOST
         self.port = PORT
@@ -59,6 +61,8 @@ None.
         self.pattern = pattern
         if pattern!=0:
             self.change_pattern(pattern)
+        self.set_mode(mode)
+        self.set_range(I_range,V_range,CF)
     def __str__(self):
         return f"{self.name}"
     def __repr__(self):
@@ -358,7 +362,79 @@ data fetch in the buffer.
             while((tm.time()-start_sample)<sample_time):
                 pass
         n=int(np.log(10*len(self.instruments)*time/sample_time)/np.log(2)+1)
-        self
+        return
         #tout envoyer puis récupérer essayer avec deux sockets différentes
+    def set_mode(self,mode='DC'):
+        """
         
+
+        Parameters
+        ----------
+        mode : *str* in 'DC','AC' or 'ACDC'
+            change the mode of the GPM . The default is 'DC'.
+
+        Raises
+        ------
+        TypeError
+            mode must be 'DC' , 'AC' or 'ACDC'.
+
+        Returns
+        -------
+        None.
+
+        """
+        if (mode!='DC') and  (mode!='AC') and   (mode!='ACDC') :
+            raise TypeError("""mode must be 'DC' , 'AC' or 'ACDC'""")
+        self.send_set(f':INPUT:MODE {mode}\r\n')
+        self.mode= mode
+        return
+    def set_range(self,I_range=10,V_range=600,CF=3):
+        """
+        
+
+        Parameters
+        ----------
+        I_range : *int* or *float*, optional
+            Current range. The default is 10.
+        V_range : *int* or *float*, optional
+            Voltage range. The default is 600.
+        CF : *int*, optional
+            Crest factor. The default is 3.
+
+        Raises
+        ------
+        ValueError
+            if I_range,V_range or CF have wrongs value see p105 of user manual.
+
+        Returns
+        -------
+        None.
+
+        """
+        if CF==3 : 
+            if not(V_range in [15, 30, 60, 150, 300, 600]):
+                raise ValueError('with CF=3, V_range must be in [15, 30, 60, 150, 300, 600]')
+            if not(I_range in [0.005, 0.010, 0.020, 0.050, 0.100, 0.200, 0.500,1, 2, 5, 10, 20]):
+                raise ValueError('with CF=3, I_range must be in [0.005, 0.010, 0.020, 0.050, 0.100, 0.200, 0.500,1, 2, 5, 10, 20]')
+            self.send_set(f':INP:VOLT:RANG {V_range}V\r\n')
+            if (I_range<1):
+                self.send_set(f':INP:CURR:RANG {int(1000*I_range)}mA\r\n')
+            else :
+                self.send_set(f':INP:CURR:RANG {I_range}A\r\n')
+        elif CF==6 : 
+            if not(V_range in [7.5, 15, 30, 75, 150, 300]):
+                raise ValueError('with CF=3, V_range must be in [7.5, 15, 30, 75, 150, 300]')
+            if not(I_range in [0.0025, 0.005, 0.010, 0.025, 0.050, 0.100, 0.250,0.5, 1, 2.5, 5, 10]):
+                raise ValueError('with CF=3, I_range must be in [0.0025, 0.005, 0.010, 0.025, 0.050, 0.100, 0.250,0.5, 1, 2.5, 5, 10]')
+            self.send_set(f':INP:VOLT:RANG {V_range}V\r\n')
+            if (I_range<0.5):
+                if I_range==0.0025:
+                    self.send_set(':INP:CURR:RANG 2.5mA\r\n')
+                else:
+                    self.send_set(f':INP:CURR:RANG {int(1000*I_range)}mA\r\n')
+                
+            else :
+                self.send_set(f':INP:CURR:RANG {I_range}A\r\n')
+        else :
+            raise ValueError('CF must be in [3,6]')
         return

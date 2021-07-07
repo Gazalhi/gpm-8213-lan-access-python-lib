@@ -49,7 +49,7 @@
 </dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GPM8213LAN.instrument.</span></span><span class="sig-name descname"><span class="pre">Instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">HOST</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PORT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">GPM8213LAN.instrument.</span></span><span class="sig-name descname"><span class="pre">Instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">HOST</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PORT</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">23</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ACDC'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CF</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl>
 <dt>HOST<span class="classifier"><em>str</em></span></dt><dd><p>local ip address of the GPM (voir System &gt; Congig &gt; LAN on the GPM)..</p>
@@ -63,6 +63,7 @@
 <dt>pattern<span class="classifier"><em>int</em> de 1 à 4 , optional</span></dt><dd><p>preset varaibles see page 94 and 95 of user manual. The default is 4.</p>
 </dd>
 </dl>
+<p>mode : mode AC ,DC or AC + DC. The default is ‘ACDC’.</p>
 <dl class="simple">
 <dt>OverflowError</dt><dd><p>if len(variables)&gt;34.</p>
 </dd>
@@ -212,6 +213,38 @@ data fetch in the buffer.</p>
 <dt>variable<span class="classifier"><em>Variable</em></span></dt><dd><p>New variable type.</p>
 </dd>
 <dt>number<span class="classifier"><em>int</em></span></dt><dd><p>the position of the item in VALUE? command.</p>
+</dd>
+</dl>
+<p>None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.set_mode">
+<span class="sig-name descname"><span class="pre">set_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'DC'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.set_mode" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>mode<span class="classifier"><em>str</em> in ‘DC’,’AC’ or ‘ACDC’</span></dt><dd><p>change the mode of the GPM . The default is ‘DC’.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>TypeError</dt><dd><p>mode must be ‘DC’ , ‘AC’ or ‘ACDC’.</p>
+</dd>
+</dl>
+<p>None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GPM8213LAN.instrument.Instrument.set_range">
+<span class="sig-name descname"><span class="pre">set_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">I_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">CF</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GPM8213LAN.instrument.Instrument.set_range" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>I_range<span class="classifier"><em>int</em> or <em>float</em>, optional</span></dt><dd><p>Current range. The default is 10.</p>
+</dd>
+<dt>V_range<span class="classifier"><em>int</em> or <em>float</em>, optional</span></dt><dd><p>Voltage range. The default is 600.</p>
+</dd>
+<dt>CF<span class="classifier"><em>int</em>, optional</span></dt><dd><p>Crest factor. The default is 3.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>ValueError</dt><dd><p>if I_range,V_range or CF have wrongs value see p105 of user manual.</p>
 </dd>
 </dl>
 <p>None.</p>
